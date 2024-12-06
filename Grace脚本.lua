@@ -64,6 +64,7 @@ end)
             game:GetService("ReplicatedStorage").elkman:Destroy()
         end
     )
+    
     local creds = window:Tab("其余", "6035145364")
     local about = creds:section("内容", true)
     
