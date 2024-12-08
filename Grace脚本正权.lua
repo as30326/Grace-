@@ -1,0 +1,777 @@
+-- 获取服务
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local LocalPlayer = Players.LocalPlayer
+
+-- 创建ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "XKScriptCenterV2Notification"
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+-- 定义全屏Notification样式
+local notificationStyle = {
+    Size = UDim2.new(0, 0, 0, 0),  -- 初始大小为0
+    Position = UDim2.new(0.5, 0, 0.5, 0),  -- 初始位置在屏幕中央
+    AnchorPoint = Vector2.new(0.5, 0.5),  -- 锚点居中
+    BackgroundColor3 = Color3.fromRGB(173, 216, 230),  -- 浅蓝色背景 (Light Blue)
+    BorderSizePixel = 0,  -- 无边框
+    ZIndex = 10,  -- UI层级
+    BackgroundTransparency = 0.7,  -- 30%透明
+}
+
+-- 创建全屏Notification Frame
+local FullScreenFrame = Instance.new("Frame")
+FullScreenFrame.Name = "FullScreenFrame"
+FullScreenFrame.Size = notificationStyle.Size
+FullScreenFrame.Position = notificationStyle.Position
+FullScreenFrame.AnchorPoint = notificationStyle.AnchorPoint
+FullScreenFrame.BackgroundColor3 = notificationStyle.BackgroundColor3
+FullScreenFrame.BorderSizePixel = notificationStyle.BorderSizePixel
+FullScreenFrame.ZIndex = notificationStyle.ZIndex
+FullScreenFrame.BackgroundTransparency = notificationStyle.BackgroundTransparency
+FullScreenFrame.Parent = ScreenGui
+
+-- 创建文本标签
+local TextLabel = Instance.new("TextLabel")
+TextLabel.Size = UDim2.new(1, 0, 1, 0)  -- 填充整个Frame
+TextLabel.Position = UDim2.new(0, 0, 0, 0)  -- 左上角
+TextLabel.Text = "正在加载中..."  -- 初始显示的文本
+TextLabel.TextColor3 = Color3.fromRGB(255, 0, 0)  -- 绿色文本
+TextLabel.BackgroundTransparency = 1  -- 透明背景
+TextLabel.TextScaled = true
+TextLabel.TextSize = 48
+TextLabel.Font = Enum.Font.Gotham  -- 使用Gotham字体
+TextLabel.ZIndex = 11
+TextLabel.Parent = FullScreenFrame
+
+-- 创建动画信息
+local scaleInfo = TweenInfo.new(
+    0.5,  -- 持续时间
+    Enum.EasingStyle.Elastic,  -- 弹性缓动
+    Enum.EasingDirection.Out
+)
+
+local moveInfo = TweenInfo.new(
+    0.5,  -- 持续时间
+    Enum.EasingStyle.Quad,  -- 二次缓动
+    Enum.EasingDirection.Out
+)
+
+local fadeInfo = TweenInfo.new(
+    0.5,  -- 持续时间
+    Enum.EasingStyle.Sine,
+    Enum.EasingDirection.Out
+)
+
+-- 显示Notification函数
+local function showXKScriptCenterV2Notification(text, duration)
+    -- 播放从小变大的动画
+    local scaleTween = TweenService:Create(FullScreenFrame, scaleInfo, {Size = UDim2.new(0.5, 0, 0.5, 0)})  -- 放大到屏幕的一半
+    scaleTween:Play()
+
+    -- 等待放大动画完成
+    scaleTween.Completed:Wait()
+
+    -- 等待4秒
+    wait(4)
+
+    -- 播放向右移动的动画
+    local moveTween = TweenService:Create(FullScreenFrame, moveInfo, {Position = UDim2.new(1, 0, 0.5, 0)})  -- 向右移动到屏幕右侧
+    moveTween:Play()
+
+    -- 等待移动动画完成
+    moveTween.Completed:Wait()
+
+    -- 播放回到中间的动画
+    local backTween = TweenService:Create(FullScreenFrame, moveInfo, {Position = UDim2.new(0.5, 0, 0.5, 0)})  -- 回到屏幕中央
+    backTween:Play()
+
+    -- 设置文本为“格蕾丝脚本”
+    TextLabel.Text = text
+
+    -- 播放放大动画
+    local finalScaleTween = TweenService:Create(FullScreenFrame, scaleInfo, {Size = UDim2.new(1, 0, 1, 0)})  -- 放大到全屏
+    finalScaleTween:Play()
+
+    -- 等待回到中间的动画完成
+    backTween.Completed:Wait()
+
+    -- 播放淡入动画
+    local fadeIn = TweenService:Create(FullScreenFrame, fadeInfo, {BackgroundTransparency = 0.7})  -- 背景透明度为70%
+    fadeIn:Play()
+
+    -- 等待指定的时间
+    wait(duration)
+
+    -- 播放淡出动画
+    local fadeOut = TweenService:Create(FullScreenFrame, fadeInfo, {BackgroundTransparency = 1})  -- 背景透明度为100%
+    fadeOut:Play()
+    fadeOut.Completed:Wait()
+
+    -- 移除Notification
+    FullScreenFrame:Destroy()
+end
+
+-- 示例：显示“XK脚本中心V2”的全屏浅蓝色背景绿色文字Notification，显示5秒后自动消失
+local text = "Grace script加载成功"  -- 要显示的文本
+local displayDuration = 4  -- 显示时间（秒）
+
+showXKScriptCenterV2Notification(text, displayDuration)
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/Revenant", true))()
+
+local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/BINjiaobzx6/BINjiao/refs/heads/main/Vape.txt")() 
+
+local OpenUI = Instance.new("ScreenGui") 
+local ImageButton = Instance.new("ImageButton") 
+local UICorner = Instance.new("UICorner") 
+OpenUI.Name = "OpenUI" 
+OpenUI.Parent = game.CoreGui 
+OpenUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling 
+ImageButton.Parent = OpenUI 
+ImageButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0) 
+ImageButton.BackgroundTransparency = 0.500 
+ImageButton.Position = UDim2.new(0.0235790554, 0, 0.466334164, 0) 
+ImageButton.Size = UDim2.new(0, 50, 0, 50) 
+ImageButton.Image = "rbxassetid://117494350103589" 
+ImageButton.Draggable = true 
+UICorner.CornerRadius = UDim.new(0, 200) 
+UICorner.Parent = ImageButton 
+ImageButton.MouseButton1Click:Connect(function() 
+  if uihide == false then
+	uihide = true
+	game.CoreGui.ui.Main:TweenSize(UDim2.new(0, 0, 0, 0),"In","Quad",0.4,true)
+else
+	uihide = false
+	game.CoreGui.ui.Main:TweenSize(UDim2.new(0, 560, 0, 319),"Out","Quad",0.4,true)
+		end 
+		
+end)
+
+uihide = false
+
+ local win = lib:Window("格蕾丝Grace丨作者:剑修 小玄奘",Color3.fromRGB(255, 24, 24), Enum.KeyCode.RightControl) 
+  
+ local JK = win:Tab("主要其余")
+ local setup = win:Tab("移除怪物")
+ local Dog = win:Tab("其余")
+ 
+setup:Button("上帝模式（Godmode）二改",function()
+workspace.DescendantAdded:Connect(function(descendant)
+    if descendant:IsA("ParticleEmitter") then
+        descendant.Rate = descendant.Rate * 10 -- line of code i added for low-graphics players to see the red(blood) rain
+    end
+end)
+
+workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "base" and descendant:IsA("BasePart") then
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            descendant.Position = player.Character.HumanoidRootPart.Position
+
+            Library:Notification({
+        	Text = "检测到下下门存在拉杆，正在自动拉开",
+        	Duration = 6
+            })
+        end
+    end
+end)
+
+workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "eye" or descendant.Name == "elkman" or descendant.Name == "Rush" or descendant.Name == "Worm" or descendant.Name == "eyePrime" then
+        descendant:Destroy() -- makes u invincible to these entities since they're all clientsided
+    end
+end)
+
+local players = game:GetService("Players")
+local localPlayer = players.LocalPlayer
+
+while true do
+    local eyeGui = localPlayer:FindFirstChild("PlayerGui"):FindFirstChild("eyegui")
+    if eyeGui then
+        eyeGui:Destroy() -- deletes the eyeparasites (literally makes you invincible even if u get hit + removes distractions)
+    end
+    task.wait(0.1)
+end
+
+while true do
+    local smileGui = localPlayer:FindFirstChild("PlayerGui"):FindFirstChild("smilegui")
+    if smileGui then
+        smileGui:Destroy() --if it wasnt for the fact that carnation gets deleted this would give you a big boost because it still slows him down
+    end
+    task.wait(0.1)
+end
+
+while true do
+    local FUNNYGOATMAN = localPlayer:FindFirstChild("PlayerGui"):FindFirstChild("GOATPORT")
+    if FUNNYGOATMAN then
+        FUNNYGOATMAN:Destroy() --doesnt work yet
+    end
+    task.wait(0.1)
+end
+end)
+ 
+ JK:Toggle("速度(开/关)","开关",false,function(v)
+        if v == true then
+            sudu = game:GetService("RunService").Heartbeat:Connect(function()
+                if game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.Humanoid and game:GetService("Players").LocalPlayer.Character.Humanoid.Parent then
+                    if game:GetService("Players").LocalPlayer.Character.Humanoid.MoveDirection.Magnitude > 0 then
+                        game:GetService("Players").LocalPlayer.Character:TranslateBy(game:GetService("Players").LocalPlayer.Character.Humanoid.MoveDirection * Speed / 10)
+                    end
+                end
+            end)
+        elseif not v and sudu then
+            sudu:Disconnect()
+            sudu = nil
+        end
+    end)
+    
+  
+ JK:Button("高亮丨", function()
+        game.Lighting.Ambient = Color3.new(1, 1, 1)
+  	end)
+
+JK:Button("高亮丨丨", function()
+        game.Lighting.Ambient = Color3.new(2, 2, 2)
+  	end)
+  	
+ JK:Button("高亮丨丨丨", function()
+        game.Lighting.Ambient = Color3.new(3, 3, 3)
+  	end)
+ 
+Dog:Button("怪物通知",function()
+local entityNames = {"WallModel", "BackdoorLookman", "Rush", "Dust", "Eyes", "JeffTheKiller", "Dread", "A60", "A120"}  --enity
+            local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/1mPger1J')))()
+            local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/Revenant", true))()
+
+            -- Ensure flags and plr are defined
+            local flags = flags or {} --Prevent Error
+            local plr = game.Players.LocalPlayer --Prevent Error2
+
+            local function notifyEntitySpawn(entity)
+                    Library.DefaultColor = Color3.fromRGB(255,0,0)
+
+            Library:Notification({
+        	Text = "请注意查看左下角刷新内容",
+        	Duration = 6
+            })
+                
+                                local sound = Instance.new("Sound", workspace)
+sound.SoundId = "rbxassetid://119569050211059"
+sound:Play()
+
+            Library:Notification({
+        	Text = "怪物已刷新",
+        	Duration = 6
+            })
+                
+                                local sound = Instance.new("Sound", workspace)
+sound.SoundId = "rbxassetid://119569050211059"
+sound:Play()
+
+            Library:Notification({
+        	Text = "怪物刷新",
+        	Duration = 6
+            })
+                
+                                local sound = Instance.new("Sound", workspace)
+sound.SoundId = "rbxassetid://119569050211059"
+sound:Play()
+
+            Library:Notification({
+        	Text = "躲起来",
+        	Duration = 6
+            })
+                
+                local sound = Instance.new("Sound", workspace)
+sound.SoundId = "rbxassetid://4590662766"
+sound:Play()
+            end
+
+            local function onChildAdded(child)
+                if table.find(entityNames, child.Name) then
+                    repeat
+                        task.wait()
+                    until plr:DistanceFromCharacter(child:GetPivot().Position) < 1000 or not child:IsDescendantOf(workspace)
+                    
+                    if child:IsDescendantOf(workspace) then
+                        notifyEntitySpawn(child)
+                    end
+                end
+            end
+
+            -- Infinite loop to keep the script running and check for hintrush flag
+            local running = true
+            while running do
+                local connection = workspace.ChildAdded:Connect(onChildAdded)
+                
+                repeat
+                    task.wait(1) -- Adjust the wait time as needed
+                until not flags.hint or not running
+                
+                connection:Disconnect()
+            end
+end)
+
+setup:Button("移除死亡时间【山羊】",function()
+game:GetService("ReplicatedStorage").SendGoatman:Destroy()
+end)
+
+setup:Button("彻底删除红色眼睛",function()
+ workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "smile" and descendant:IsA("BasePart") then
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            descendant:Destroy()
+        end
+    end
+end)
+workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "eyePrime" and descendant:IsA("BasePart") then
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            descendant:Destroy()
+        end
+    end
+end)
+end)
+
+setup:Button("彻底删除elkman",function()
+ workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "smile" and descendant:IsA("BasePart") then
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            descendant:Destroy()
+        end
+    end
+end)
+workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "elkman" and descendant:IsA("BasePart") then
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            descendant:Destroy()
+        end
+    end
+end)
+end)
+
+setup:Button("移除白色怪物【模型】",function()
+game:GetService("ReplicatedStorage").SendWorm:Destroy()
+end)
+
+setup:Button("移除粉色冲击怪物【模型】",function()
+game:GetService("ReplicatedStorage").Rush:Destroy()
+end)
+
+setup:Button("移除粉色冲击怪物【伤害】",function()
+game:GetService("ReplicatedStorage").SendRush:Destroy()
+end)
+
+setup:Button("移除elkman【简易版】",function()
+game:GetService("ReplicatedStorage").elkman:Destroy()
+end)
+
+setup:Button("移除微笑太阳",function()
+game:GetService("ReplicatedStorage").smilegui:Destroy()
+end)
+
+setup:Button("彻底删除微笑",function()
+ workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "smile" and descendant:IsA("BasePart") then
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            descendant:Destroy()
+        end
+    end
+end)
+workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "smilegui" and descendant:IsA("BasePart") then
+        local player = game.Players.LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            descendant:Destroy()
+        end
+    end
+end)
+end)
+
+setup:Button("移除红色眼睛怪物【模型】",function()
+game:GetService("ReplicatedStorage").eyePrime:Destroy()
+end)
+
+setup:Button("移除左下方计时器",function()
+game:GetService("Players").LocalPlayer.PlayerGui.SpeedrunTimer.Timer:Destroy()
+end)
+
+setup:Button("移除核心",function()
+game:GetService("Players").LocalPlayer.PlayerGui.PizzaTower.Base["it's pizza tower time"]:Destroy()
+end)
+
+Dog:Button("冲击怪物文字ESP",function()
+    EAT = state
+        if EAT then
+            _G.Tree2ESPInstances = {}
+            local esptable = {doors = {}}
+
+            local function createBillboard(instance, name, color)
+                local bill = Instance.new("BillboardGui", game.CoreGui)
+                bill.AlwaysOnTop = true
+                bill.Size = UDim2.new(0, 100, 0, 50)
+                bill.Adornee = instance
+                bill.MaxDistance = 2000
+
+                local mid = Instance.new("Frame", bill)
+                mid.AnchorPoint = Vector2.new(0.5, 0.5)
+                mid.BackgroundColor3 = color
+                mid.Size = UDim2.new(0, 8, 0, 8)
+                mid.Position = UDim2.new(0.5, 0, 0.5, 0)
+                Instance.new("UICorner", mid).CornerRadius = UDim.new(1, 0)
+                Instance.new("UIStroke", mid)
+
+                local txt = Instance.new("TextLabel", bill)
+                txt.AnchorPoint = Vector2.new(0.5, 0.5)
+                txt.BackgroundTransparency = 1
+                txt.TextColor3 = color
+                txt.Size = UDim2.new(1, 0, 0, 20)
+                txt.Position = UDim2.new(0.5, 0, 0.7, 0)
+                txt.Text = name
+                Instance.new("UIStroke", txt)
+
+                task.spawn(function()
+                    while bill do
+                        if bill.Adornee == nil or not bill.Adornee:IsDescendantOf(workspace) then
+                            bill.Enabled = false
+                            bill.Adornee = nil
+                            bill:Destroy()
+                        end
+                        task.wait()
+                    end
+                end)
+            end
+
+            local function monitorTree2()
+                for _, instance in pairs(workspace:GetDescendants()) do
+                    if instance:IsA("Model") and instance.Name == "Rush" then
+                        createBillboard(instance, "RUSH", Color3.new(255, 0, 0)) -- Change color as needed
+                    end
+                end
+
+                workspace.DescendantAdded:Connect(function(instance)
+                    if instance:IsA("Model") and instance.Name == "Rush" then
+                        createBillboard(instance, "RUSH", Color3.new(255, 0, 0)) -- Change color as needed
+                    end
+                end)
+            end
+
+            monitorTree2()
+            table.insert(_G.Tree2ESPInstances, esptable)
+				
+        else
+            if EAT then
+                for _, instance in pairs(_G.Tree2ESPInstances) do
+                    for _, v in pairs(instance.doors) do
+                        v.delete()
+                    end
+                end
+                _G.Tree2ESPInstances = nil
+            end
+        end
+end)
+
+Dog:Button("眼睛文字ESP",function()
+    EAT = state
+        if EAT then
+            _G.Tree2ESPInstances = {}
+            local esptable = {doors = {}}
+
+            local function createBillboard(instance, name, color)
+                local bill = Instance.new("BillboardGui", game.CoreGui)
+                bill.AlwaysOnTop = true
+                bill.Size = UDim2.new(0, 100, 0, 50)
+                bill.Adornee = instance
+                bill.MaxDistance = 2000
+
+                local mid = Instance.new("Frame", bill)
+                mid.AnchorPoint = Vector2.new(0.5, 0.5)
+                mid.BackgroundColor3 = color
+                mid.Size = UDim2.new(0, 8, 0, 8)
+                mid.Position = UDim2.new(0.5, 0, 0.5, 0)
+                Instance.new("UICorner", mid).CornerRadius = UDim.new(1, 0)
+                Instance.new("UIStroke", mid)
+
+                local txt = Instance.new("TextLabel", bill)
+                txt.AnchorPoint = Vector2.new(0.5, 0.5)
+                txt.BackgroundTransparency = 1
+                txt.TextColor3 = color
+                txt.Size = UDim2.new(1, 0, 0, 20)
+                txt.Position = UDim2.new(0.5, 0, 0.7, 0)
+                txt.Text = name
+                Instance.new("UIStroke", txt)
+
+                task.spawn(function()
+                    while bill do
+                        if bill.Adornee == nil or not bill.Adornee:IsDescendantOf(workspace) then
+                            bill.Enabled = false
+                            bill.Adornee = nil
+                            bill:Destroy()
+                        end
+                        task.wait()
+                    end
+                end)
+            end
+
+            local function monitorTree2()
+                for _, instance in pairs(workspace:GetDescendants()) do
+                    if instance:IsA("Model") and instance.Name == "Worm" then
+                        createBillboard(instance, "眼睛", Color3.new(255, 0, 0)) -- Change color as needed
+                    end
+                end
+
+                workspace.DescendantAdded:Connect(function(instance)
+                    if instance:IsA("Model") and instance.Name == "Worm" then
+                        createBillboard(instance, "眼睛", Color3.new(255, 0, 0)) -- Change color as needed
+                    end
+                end)
+            end
+
+            monitorTree2()
+            table.insert(_G.Tree2ESPInstances, esptable)
+				
+        else
+            if EAT then
+                for _, instance in pairs(_G.Tree2ESPInstances) do
+                    for _, v in pairs(instance.doors) do
+                        v.delete()
+                    end
+                end
+                _G.Tree2ESPInstances = nil
+            end
+        end
+end)
+
+setup:Button("山羊人文字ESP",function()
+    EAT = state
+        if EAT then
+            _G.Tree2ESPInstances = {}
+            local esptable = {doors = {}}
+
+            local function createBillboard(instance, name, color)
+                local bill = Instance.new("BillboardGui", game.CoreGui)
+                bill.AlwaysOnTop = true
+                bill.Size = UDim2.new(0, 100, 0, 50)
+                bill.Adornee = instance
+                bill.MaxDistance = 2000
+
+                local mid = Instance.new("Frame", bill)
+                mid.AnchorPoint = Vector2.new(0.5, 0.5)
+                mid.BackgroundColor3 = color
+                mid.Size = UDim2.new(0, 8, 0, 8)
+                mid.Position = UDim2.new(0.5, 0, 0.5, 0)
+                Instance.new("UICorner", mid).CornerRadius = UDim.new(1, 0)
+                Instance.new("UIStroke", mid)
+
+                local txt = Instance.new("TextLabel", bill)
+                txt.AnchorPoint = Vector2.new(0.5, 0.5)
+                txt.BackgroundTransparency = 1
+                txt.TextColor3 = color
+                txt.Size = UDim2.new(1, 0, 0, 20)
+                txt.Position = UDim2.new(0.5, 0, 0.7, 0)
+                txt.Text = name
+                Instance.new("UIStroke", txt)
+
+                task.spawn(function()
+                    while bill do
+                        if bill.Adornee == nil or not bill.Adornee:IsDescendantOf(workspace) then
+                            bill.Enabled = false
+                            bill.Adornee = nil
+                            bill:Destroy()
+                        end
+                        task.wait()
+                    end
+                end)
+            end
+
+            local function monitorTree2()
+                for _, instance in pairs(workspace:GetDescendants()) do
+                    if instance:IsA("Model") and instance.Name == "elkman" then
+                        createBillboard(instance, "山羊人", Color3.new(128, 42, 42)) -- Change color as needed
+                    end
+                end
+
+                workspace.DescendantAdded:Connect(function(instance)
+                    if instance:IsA("Model") and instance.Name == "elkman" then
+                        createBillboard(instance, "山羊人", Color3.new(128, 42, 42)) -- Change color as needed
+                    end
+                end)
+            end
+
+            monitorTree2()
+            table.insert(_G.Tree2ESPInstances, esptable)
+				
+        else
+            if EAT then
+                for _, instance in pairs(_G.Tree2ESPInstances) do
+                    for _, v in pairs(instance.doors) do
+                        v.delete()
+                    end
+                end
+                _G.Tree2ESPInstances = nil
+            end
+        end
+end)
+
+setup:Button("门文字ESP",function()
+    EAT = state
+        if EAT then
+            _G.Tree2ESPInstances = {}
+            local esptable = {doors = {}}
+
+            local function createBillboard(instance, name, color)
+                local bill = Instance.new("BillboardGui", game.CoreGui)
+                bill.AlwaysOnTop = true
+                bill.Size = UDim2.new(0, 100, 0, 50)
+                bill.Adornee = instance
+                bill.MaxDistance = 2000
+
+                local mid = Instance.new("Frame", bill)
+                mid.AnchorPoint = Vector2.new(0.5, 0.5)
+                mid.BackgroundColor3 = color
+                mid.Size = UDim2.new(0, 8, 0, 8)
+                mid.Position = UDim2.new(0.5, 0, 0.5, 0)
+                Instance.new("UICorner", mid).CornerRadius = UDim.new(1, 0)
+                Instance.new("UIStroke", mid)
+
+                local txt = Instance.new("TextLabel", bill)
+                txt.AnchorPoint = Vector2.new(0.5, 0.5)
+                txt.BackgroundTransparency = 1
+                txt.TextColor3 = color
+                txt.Size = UDim2.new(1, 0, 0, 20)
+                txt.Position = UDim2.new(0.5, 0, 0.7, 0)
+                txt.Text = name
+                Instance.new("UIStroke", txt)
+
+                task.spawn(function()
+                    while bill do
+                        if bill.Adornee == nil or not bill.Adornee:IsDescendantOf(workspace) then
+                            bill.Enabled = false
+                            bill.Adornee = nil
+                            bill:Destroy()
+                        end
+                        task.wait()
+                    end
+                end)
+            end
+
+            local function monitorTree2()
+                for _, instance in pairs(workspace:GetDescendants()) do
+                    if instance:IsA("Model") and instance.Name == "Door" then
+                        createBillboard(instance, "门", Color3.new(0, 255, 0)) -- Change color as needed
+                    end
+                end
+
+                workspace.DescendantAdded:Connect(function(instance)
+                    if instance:IsA("Model") and instance.Name == "Door" then
+                        createBillboard(instance, "门", Color3.new(0, 255, 0)) -- Change color as needed
+                    end
+                end)
+            end
+
+            monitorTree2()
+            table.insert(_G.Tree2ESPInstances, esptable)
+				
+        else
+            if EAT then
+                for _, instance in pairs(_G.Tree2ESPInstances) do
+                    for _, v in pairs(instance.doors) do
+                        v.delete()
+                    end
+                end
+                _G.Tree2ESPInstances = nil
+            end
+        end
+end)
+
+setup:Button("红色眼睛刷新提示",function()
+            local entityNames = {"elkman", "BackdoorLookman", "Rush", "AmbushMoving", "Eyes", "JeffTheKiller", "Dread", "A60", "A120"}  --enity
+            local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/1mPger1J')))()
+            local OrionLib = loadstring(game:HttpGet(('https://pastebin.com/raw/1mPger1J')))()
+
+            -- Ensure flags and plr are defined
+            local flags = flags or {} --Prevent Error
+            local plr = game.Players.LocalPlayer --Prevent Error2
+
+            local function notifyEntitySpawn(entity)
+                    OrionLib:MakeNotification({
+                    Name = "红色眼睛怪物出现，警告WARN!!!!!!!!!!!!!!",
+                    Content = "不要转移视线!!!!! 跑起来!!!!",
+                    Time = 3
+                })     
+                
+                                local sound = Instance.new("Sound", workspace)
+sound.SoundId = "rbxassetid://119569050211059"
+sound:Play()
+
+                    OrionLib:MakeNotification({
+                    Name = "格蕾丝",
+                    Content = "XKGLS",
+                    Time = 7
+                })
+                
+                local sound = Instance.new("Sound", workspace)
+sound.SoundId = "rbxassetid://4590662766"
+sound:Play()
+            end
+
+            local function onChildAdded(child)
+                if table.find(entityNames, child.Name) then
+                    repeat
+                        task.wait()
+                    until plr:DistanceFromCharacter(child:GetPivot().Position) < 1000 or not child:IsDescendantOf(workspace)
+                    
+                    if child:IsDescendantOf(workspace) then
+                        notifyEntitySpawn(child)
+                    end
+                end
+            end
+
+            -- Infinite loop to keep the script running and check for hintrush flag
+            local running = true
+            while running do
+                local connection = workspace.ChildAdded:Connect(onChildAdded)
+                
+                repeat
+                    task.wait(1) -- Adjust the wait time as needed
+                until not flags.hint or not running
+                
+                connection:Disconnect()
+            end
+end)
+
+tab:Toggle("拉杆透视", false, function(bool)
+    if bool then
+        local runService = game:GetService("RunService")
+        event = runService.RenderStepped:Connect(function()
+            for _,v in pairs(game:GetService("Workspace"):GetChildren()) do
+                if v:FindFirstChild("BasePart") then
+                    if not v:FindFirstChild("Lol") then
+                        local esp = Instance.new("Highlight", v)
+                        esp.Name = "Lol"
+                        esp.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                        esp.FillColor = Color3.new(0, 255, 0)
+                    end
+                end
+            end
+        end)
+    end
+    if not bool then
+        event:Disconnect()
+        for _,v in pairs(game:GetService("Workspace"):GetChildren()) do
+            if v:FindFirstChild("BasePart") then
+                v:FindFirstChild("Lol"):Destroy()
+            end
+        end
+    end
+end)
+
+p:Button("修改金钥匙",function()
+game:GetService("Players").LocalPlayer.PlayerGui.CurrenciesUI.Keys.text 10000
+end)
